@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websocket-loadgen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: websocket-loadgen
+  template:
+    metadata:
+      labels:
+        app: websocket-loadgen
+    spec:
+      containers:
+      - name: websocket-loadgen
+        image: linkous8/websocket-echo:latest
+        imagePullPolicy: Always
+        args:
+        - "websocket_loadgen/loadgen.py"
+        - "500"
+        - "6"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
